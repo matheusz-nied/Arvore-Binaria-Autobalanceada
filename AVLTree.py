@@ -1,6 +1,3 @@
-import time
-import dados
-
 
 class No:
     def __init__(self, valor):
@@ -20,19 +17,21 @@ def constroiNo(valor):
     return temp
 
 
-def inserirNo(valor, no):
+def inserirNo(valor, no, quantidade_rotacoes):
 
     if (no == None):
 
-        return constroiNo(valor)
+        return constroiNo(valor), quantidade_rotacoes
 
     if (valor < no.valor):
-        no.esq = inserirNo(valor, no.esq)
+        no.esq, quantidade_rotacoes = inserirNo(
+            valor, no.esq, quantidade_rotacoes)
 
     elif (valor > no.valor):
-        no.dir = inserirNo(valor, no.dir)
-    no =balancear(no)
-    return no
+        no.dir, quantidade_rotacoes = inserirNo(
+            valor, no.dir, quantidade_rotacoes)
+    no, quantidade_rotacoes = balancear(no, quantidade_rotacoes)
+    return no, quantidade_rotacoes
 
 
 def exibirEmOrdem(no):
@@ -51,7 +50,7 @@ def buscar(valor, no, quantidadeBusca):
 
     quantidadeBusca += 1
     if(no == None):
-        return None
+        return None, quantidadeBusca
 
     if (valor < no.valor):
         return buscar(valor, no.esq, quantidadeBusca)
@@ -66,18 +65,15 @@ def alturaArvore(noRaiz):
     if(noRaiz == None):
         return -1
     else:
-        return noRaiz.altura
-        # esq = alturaArvore(noRaiz.esq)
-        # dir = alturaArvore(noRaiz.dir)
-        # if(esq > dir):
-        #     return esq + 1
-        # else:
-        #     return dir + 1
-        
+        esq = alturaArvore(noRaiz.esq)
+        dir = alturaArvore(noRaiz.dir)
+        if(esq > dir):
+            return esq + 1
+        else:
+            return dir + 1
 
 
 def maiorEntre(valor1, valor2):
-    print(valor2)
     if(valor1 > valor2):
         return valor1
     elif(valor2 > valor1):
@@ -86,26 +82,26 @@ def maiorEntre(valor1, valor2):
         return 0
 
 
-def rotacionaEsq(noA):
+def rotacionaEsq(noA, quantidade_rotacoes):
+    quantidade_rotacoes += 1
     noB = noA.dir
     temp = noB.esq
     noA.dir = temp
     noB.esq = noA
     noA.altura = maiorEntre(alturaArvore(noA.esq), alturaArvore(noA.dir)) + 1
     noB.altura = maiorEntre(alturaArvore(noB.esq), alturaArvore(noB.dir)) + 1
-    return noB
+    return noB, quantidade_rotacoes
 
 
-def rotacionaDir(noB):
+def rotacionaDir(noB, quantidade_rotacoes):
+    quantidade_rotacoes += 1
     noA = noB.esq
     temp = noA.dir
     noB.esq = temp
     noA.dir = noB
-    #print(noB)
-    #print(maiorEntre(alturaArvore(noB.esq), alturaArvore(noB.dir)))
     noB.altura = maiorEntre(alturaArvore(noB.esq), alturaArvore(noB.dir)) + 1
     noA.altura = maiorEntre(alturaArvore(noA.esq), alturaArvore(noA.dir)) + 1
-    return noA
+    return noA, quantidade_rotacoes
 
 
 def obterBalanceamento(no):
@@ -114,32 +110,28 @@ def obterBalanceamento(no):
     return 0
 
 
-def balancear(no):
+def balancear(no, quantidade_rotacoes):
     no.altura = maiorEntre(alturaArvore(no.esq), alturaArvore(no.dir)) + 1
-  
+
     balanceamento = obterBalanceamento(no)
-    print(f"{no.valor} - {balanceamento}")
 
     if(balanceamento > 1 and obterBalanceamento(no.esq) >= 0):
-        return rotacionaDir(no)
+        return rotacionaDir(no, quantidade_rotacoes)
     if(balanceamento > 1 and obterBalanceamento(no.esq) < 0):
 
-        no.esq = rotacionaEsq(no.esq)
-        return rotacionaDir(no)
+        no.esq, quantidade_rotacoes = rotacionaEsq(no.esq, quantidade_rotacoes)
+        return rotacionaDir(no, quantidade_rotacoes)
     if (balanceamento < -1 and obterBalanceamento(no.dir) <= 0):
 
-        return rotacionaEsq(no)
+        return rotacionaEsq(no, quantidade_rotacoes)
 
     if (balanceamento < -1 and obterBalanceamento(no.dir) > 0):
 
-        print(no.dir)
+        no.dir, quantidade_rotacoes = rotacionaDir(no.dir, quantidade_rotacoes)
 
-        no.dir = rotacionaDir(no.dir)
-        print("AQUi 4-2")
+        return rotacionaEsq(no, quantidade_rotacoes)
 
-        return rotacionaEsq(no)
-
-    return no
+    return no, quantidade_rotacoes
 
 
 def desenharABB(raiz, espaco):
@@ -148,47 +140,14 @@ def desenharABB(raiz, espaco):
         return
 
     espaco += 6
- 
+
     desenharABB(raiz.dir, espaco)
- 
+
     print("")
     i = 6
     while(i < espaco):
         print(" ", end="")
-        i+=1
+        i += 1
 
-
-    print(f"{raiz.valor}") 
+    print(f"{raiz.valor}")
     desenharABB(raiz.esq, espaco)
-
-# MAIN
-raiz = None
-quantidadeBusca = 0
-tempo_gasto = 0
-
-raiz = inserirNo(10, raiz)
-raiz = inserirNo(45, raiz)
-raiz = inserirNo(46, raiz)
-raiz = inserirNo(99, raiz)
-raiz = inserirNo(25, raiz)
-raiz = inserirNo(24, raiz)
-raiz = inserirNo(98, raiz)
-raiz = inserirNo(67, raiz)
-raiz = inserirNo(68, raiz)
-raiz = inserirNo(7, raiz)
-
-# ini = time.time()
-
-# item,quantidadeBusca  = buscar(67, raiz, quantidadeBusca)
-
-# fim = time.time()
-# tempo_gasto = fim - ini
-
-# print(f"Quantidade de vezes que busca foi chamado: {quantidadeBusca}")
-# print(f"Tempo gasto na busca: {tempo_gasto}")
-#print("Em ordem")
-print(exibirEmOrdem(raiz))
-# print(alturaArvore(raiz.dir))
-
-#print(item + 1)
-desenharABB(raiz,0)

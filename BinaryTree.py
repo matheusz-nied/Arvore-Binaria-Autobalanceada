@@ -1,5 +1,3 @@
-import time
-import dados
 
 
 class No:
@@ -49,7 +47,7 @@ def buscar(valor, no, quantidadeBusca):
 
     quantidadeBusca += 1
     if(no == None):
-        return None
+        return None, quantidadeBusca
 
     if (valor < no.valor):
         return buscar(valor, no.esq, quantidadeBusca)
@@ -91,32 +89,3 @@ def desenharABB(raiz, espaco):
     print(f"{raiz.valor}") 
     desenharABB(raiz.esq, espaco)
 
-# MAIN
-raiz = None
-quantidadeBusca = 0
-tempo_gasto = 0
-
-#print(dados.dados_avl_1)
-raiz = inserirNo(10, raiz)
-raiz = inserirNo(45, raiz)
-raiz = inserirNo(13, raiz)
-raiz = inserirNo(99, raiz)
-raiz = inserirNo(25, raiz)
-raiz = inserirNo(24, raiz)
-raiz = inserirNo(98, raiz)
-raiz = inserirNo(67, raiz)
-raiz = inserirNo(68, raiz)
-raiz = inserirNo(7, raiz)
-
-# ini = time.time()
-
-# item,quantidadeBusca  = buscar(67, raiz, quantidadeBusca)
-
-# fim = time.time()
-# tempo_gasto = fim - ini
-
-# print(f"Quantidade de vezes que busca foi chamado: {quantidadeBusca}")
-# print(f"Tempo gasto na busca: {tempo_gasto}")
-#print(exibirEmOrdem(raiz))
-#print(alturaArvore(raiz))
-desenharABB(raiz, 0)
