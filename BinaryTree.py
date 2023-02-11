@@ -1,4 +1,4 @@
-
+from time import sleep
 
 class No:
     def __init__(self, valor):
@@ -44,6 +44,8 @@ def exibirEmOrdem(no):
 
 
 def buscar(valor, no, quantidadeBusca):
+    sleep(0.005)
+
 
     quantidadeBusca += 1
     if(no == None):

@@ -34,7 +34,7 @@ def ArvoreBinariaExe(exibirEmOrdem = False):
     print(f"Tempo gasto na busca da Árvore Binária: {tempo_gasto}")
 
 
-def ArvoreAVLExe(exibirEmOrdem = 0):
+def ArvoreAVLExe(exibirEmOrdem = False):
     # MAIN
     raiz = None
     quantidadeBusca = 0
@@ -64,6 +64,10 @@ def ArvoreAVLExe(exibirEmOrdem = 0):
         f"Quantidade de vezes que busca foi chamada na Árvore AVL: {quantidadeBusca}")
     print(f"Tempo gasto na busca da Árvore AVL: {tempo_gasto}")
     print(f"Quantidade rotações Ávore AVL: {quantidade_rotacoes}")
+
+
+#Se quiser imprimir em Ordem só passar um argumento True 
+#ArvoreBinariaExe(True) ou ArvoreAVLExe(True)
 
 
 ArvoreBinariaExe()
