@@ -65,7 +65,7 @@ def buscar(valor, no, quantidadeBusca):
 
 def alturaArvore(noRaiz):
     if(noRaiz == None):
-        return -1
+        return 0
     else:
         esq = alturaArvore(noRaiz.esq)
         dir = alturaArvore(noRaiz.dir)
