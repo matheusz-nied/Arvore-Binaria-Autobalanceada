@@ -26,7 +26,10 @@ def ArvoreBinariaExe(exibirEmOrdem = False):
     alturaArvoreBinaria = BinaryTree.alturaArvore(raiz)
 
     if(exibirEmOrdem):        
-        print(BinaryTree.exibirEmOrdem(raiz))
+        BinaryTree.exibirEmOrdem(raiz)
+    
+    print()
+    print()
 
     print(f"Altura da árvore Binária: {alturaArvoreBinaria}")
     print(
@@ -57,7 +60,11 @@ def ArvoreAVLExe(exibirEmOrdem = False):
     tempo_gasto = fim - ini
     
     if(exibirEmOrdem):
-        print(AVLTree.exibirEmOrdem(raiz))
+        AVLTree.exibirEmOrdem(raiz)
+        
+    print()
+    print()
+
     alturaArvoreAVL = AVLTree.alturaArvore(raiz)
     print(f"Altura da árvore AVL: {alturaArvoreAVL}")
     print(
@@ -69,7 +76,7 @@ def ArvoreAVLExe(exibirEmOrdem = False):
 #Se quiser imprimir em Ordem só passar um argumento True 
 #ArvoreBinariaExe(True) ou ArvoreAVLExe(True)
 
-
-ArvoreBinariaExe()
+ArvoreBinariaExe(True)
 print("\n")
-ArvoreAVLExe()
+ArvoreAVLExe(True)
+

@@ -45,6 +45,8 @@ def exibirEmOrdem(no):
 
     if (no.dir != None):
         exibirEmOrdem(no.dir)
+        
+        
 
 
 def buscar(valor, no, quantidadeBusca):
